@@ -1,5 +1,7 @@
 package com.pushittoprod.groovible
 
+import com.fasterxml.jackson.annotation.JsonInclude
+import static com.fasterxml.jackson.annotation.JsonInclude.*
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.core.JsonGenerator
 import com.fasterxml.jackson.databind.SerializerProvider
@@ -27,6 +29,7 @@ class AnsiblePlaybook implements Applicable {
     }
 }
 
+@JsonInclude(value=Include.NON_EMPTY, content=Include.NON_NULL)
 class AnsiblePlay implements Applicable {
     String hosts = null
     Map<String, Object> vars = [:]
