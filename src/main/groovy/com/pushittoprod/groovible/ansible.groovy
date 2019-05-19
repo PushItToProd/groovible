@@ -39,7 +39,7 @@ class AnsiblePlay implements Applicable {
     }
 }
 
-class DslTasksBlock {
+class DslTasksBlock implements Applicable {
     // TODO: support handlers(), notify(), etc.
     List<AnsibleTask> tasks
 
@@ -98,14 +98,6 @@ class DslTasksBlock {
             default:
                 throw new MissingMethodException(name, this.class, args)
         }
-    }
-
-    // TODO: use Applicable
-    def apply(Closure f) {
-        def code = f.rehydrate(this, this, this)
-        code.resolveStrategy = Closure.DELEGATE_ONLY
-        code()
-        return tasks
     }
 }
 
