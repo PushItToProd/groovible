@@ -41,4 +41,14 @@ class DslTasksBlockTest {
         new DslTasksBlock(tasks).addTask( "print debug", "debug", [msg: "hello"])
         assert tasks[0].name == "print debug"
     }
+
+    @Test void notifyWorks() {
+        List<AnsibleTask> tasks = []
+        new DslTasksBlock(tasks).apply {
+            yum {
+                notify "example handler"
+            }
+        }
+        assert tasks[0].handlers == ["example handler"]
+    }
 }

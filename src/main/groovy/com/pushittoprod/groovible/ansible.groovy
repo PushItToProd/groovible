@@ -100,6 +100,7 @@ class DslTasksBlock {
         }
     }
 
+    // TODO: use Applicable
     def apply(Closure f) {
         def code = f.rehydrate(this, this, this)
         code.resolveStrategy = Closure.DELEGATE_ONLY
@@ -108,9 +109,22 @@ class DslTasksBlock {
     }
 }
 
-class AnsibleTask {
+class AnsibleTask implements Applicable {
     String name
     String module
-    Map<String, Object> args
+    Map<String, Object> args = [:]
+    List<String> handlers = []
+
+    def propertyMissing(String name) {
+        args[name]
+    }
+
+    def propertyMissing(String name, value) {
+        args[name] = value
+    }
+
+    def notify(String... handlers) {
+        this.handlers.addAll(handlers)
+    }
 }
 
