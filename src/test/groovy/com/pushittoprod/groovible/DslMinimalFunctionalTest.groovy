@@ -14,6 +14,13 @@ class DslMinimalFunctionalTest {
                 }
 
                 remote_user = "root"
+
+                tasks {
+                    yum("ensure apache is at the latest version") {
+                        name = "httpd"
+                        state = "latest"
+                    }
+                }
             }
         }
     }
@@ -30,13 +37,8 @@ class DslMinimalFunctionalTest {
         assert playbook.plays.size() == 1
     }
 
-    @Test void playbookSetsHosts() {
+    @Test void createsTask() {
         AnsiblePlaybook playbook = createPlaybook()
-        assert playbook.plays[0].hosts == "hosts"
-    }
-
-    @Test void playbookSetsVars() {
-        AnsiblePlaybook playbook = createPlaybook()
-        assert playbook.plays[0].vars.foo == "bar"
+        assert playbook.plays[0].tasks.size() == 1
     }
 }
