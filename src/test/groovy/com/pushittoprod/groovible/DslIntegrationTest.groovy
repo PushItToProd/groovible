@@ -4,7 +4,7 @@ import org.junit.Test
 import static com.pushittoprod.groovible.AnsibleDsl.*
 
 
-class DslMinimalFunctionalTest {
+class DslIntegrationTest {
     def createPlaybook = {
         playbook {
             play {
