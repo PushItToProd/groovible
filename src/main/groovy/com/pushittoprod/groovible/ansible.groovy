@@ -1,5 +1,10 @@
 package com.pushittoprod.groovible
 
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.core.JsonGenerator
+import com.fasterxml.jackson.databind.SerializerProvider
+import com.fasterxml.jackson.databind.ser.std.StdSerializer
+
 class AnsibleDsl {
     static AnsiblePlaybook playbook(Closure cl) {
         def playbook = new AnsiblePlaybook()
@@ -15,6 +20,10 @@ class AnsiblePlaybook implements Applicable {
         def play = new AnsiblePlay()
         play.apply(f)
         plays.add(play)
+    }
+
+    String compile() {
+        Serialization.serializeYaml(this.plays)
     }
 }
 
@@ -90,6 +99,7 @@ class DslTasksBlock implements Applicable {
 }
 
 class AnsibleTask implements Applicable {
+    @JsonProperty("name")
     String taskName = null
     String module
     Map<String, Object> args = [:]
@@ -122,3 +132,22 @@ class AnsibleTask implements Applicable {
     }
 }
 
+class AnsibleTaskSerializer extends StdSerializer<AnsibleTask> {
+    AnsibleTaskSerializer() {
+        this(null);
+    }
+
+    AnsibleTaskSerializer(Class<AnsibleTask> t) {
+        super(t)
+    }
+
+    @Override
+    void serialize(AnsibleTask value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+        gen.writeStartObject()
+        if (value.taskName != null) {
+            gen.writeStringField("name", value.taskName)
+        }
+        gen.writeObjectField(value.module, value.args)
+        gen.writeEndObject()
+    }
+}

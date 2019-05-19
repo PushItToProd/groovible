@@ -68,10 +68,10 @@ class DslFunctionalTestEndToEnd {
           name: httpd
           state: started
       handlers:
-        - name: restart apache
-          service:
-            name: httpd
-            state: restarted
+      - name: restart apache
+        service:
+          name: httpd
+          state: restarted
     '''.stripIndent().trim()
 
     @Test void testExample() {
