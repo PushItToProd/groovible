@@ -11,8 +11,10 @@ class AnsibleDsl {
 class AnsiblePlaybook implements Applicable {
     List<AnsiblePlay> plays = []
 
-    def play(Closure f) {
-        throw new Exception('TODO')
+    void play(Closure f) {
+        def play = new AnsiblePlay()
+        play.apply(f)
+        plays.add(play)
     }
 }
 
