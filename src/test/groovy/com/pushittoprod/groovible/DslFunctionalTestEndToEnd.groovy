@@ -75,7 +75,7 @@ class DslFunctionalTestEndToEnd {
     '''.stripIndent().trim()
 
     @Test void testExample() {
-        def output = input.compile()
+        def output = input.compile().stripIndent().trim()
         assert expected_output == output
     }
 }
