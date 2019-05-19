@@ -6,7 +6,7 @@ import org.junit.Test
 import static com.pushittoprod.groovible.AnsibleDsl.*
 
 // functional test for overall dsl behavior
-class DslTest {
+class DslFunctionalTestEndToEnd {
     def input =
             playbook {
                 // a play with no name
@@ -73,7 +73,7 @@ class DslTest {
           service:
             name: httpd
             state: restarted
-    '''.trim()
+    '''.stripIndent().trim()
 
     @Test void testExample() {
         def output = input.compile()
