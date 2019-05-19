@@ -16,7 +16,7 @@ class AnsiblePlaybook implements Applicable {
     }
 }
 
-class AnsiblePlay {
+class AnsiblePlay implements Applicable {
     String hosts = null
     Map<String, Object> vars = [:]
     String remote_user = null
