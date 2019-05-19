@@ -12,6 +12,8 @@ class DslMinimalFunctionalTest {
                 vars {
                     foo = 'bar'
                 }
+
+                remote_user = "root"
             }
         }
     }
