@@ -19,6 +19,8 @@ class DslMinimalFunctionalTest {
                     yum("ensure apache is at the latest version") {
                         name = "httpd"
                         state = "latest"
+
+                        notify "example handler"
                     }
                 }
             }
@@ -40,5 +42,10 @@ class DslMinimalFunctionalTest {
     @Test void createsTask() {
         AnsiblePlaybook playbook = createPlaybook()
         assert playbook.plays[0].tasks.size() == 1
+    }
+
+    @Test void setsNotify() {
+        AnsiblePlaybook playbook = createPlaybook()
+        assert playbook.plays[0].tasks[0].handlers == ["example handler"]
     }
 }
