@@ -151,7 +151,7 @@ class AnsibleTaskSerializer extends StdSerializer<AnsibleTask> {
             gen.writeStringField("name", value.taskName)
         }
         gen.writeObjectField(value.module, value.args)
-        if (value.handlers != null) {
+        if (value.handlers != null && value.handlers.size() > 0) {
             gen.writeArrayFieldStart("notify")
             for (handler in value.handlers) {
                 gen.writeString(handler)
