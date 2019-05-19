@@ -12,7 +12,7 @@ class AnsiblePlaybook implements Applicable {
     List<AnsiblePlay> plays = []
 
     def play(Closure f) {
-
+        throw new Exception('TODO')
     }
 }
 
