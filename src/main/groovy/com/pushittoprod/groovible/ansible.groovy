@@ -72,8 +72,8 @@ class DslTasksBlock {
         assert args instanceof Object[]
         // check whether the task has a name
         String taskName = null
-        String mapName = name
-        def argsObject = args[0]
+        String moduleName = name
+        def argsObject
 
         switch (args[0]) {  // TODO: switch based on number of arguments
             case String:
@@ -90,10 +90,10 @@ class DslTasksBlock {
 
         switch (argsObject) {
             case Closure:
-                return addTask(taskName, name, argsObject as Closure)
+                tasks.add(new AnsibleTask(taskName, moduleName, argsObject as Closure))
                 break
             case Map:
-                return addTask(taskName, name, argsObject as Map)
+                tasks.add(new AnsibleTask(taskName, moduleName, argsObject as Map))
                 break
             default:
                 throw new MissingMethodException(name, this.class, args)
@@ -110,10 +110,24 @@ class DslTasksBlock {
 }
 
 class AnsibleTask implements Applicable {
-    String name
+    String name = null
     String module
     Map<String, Object> args = [:]
     List<String> handlers = []
+
+    AnsibleTask() {}
+
+    AnsibleTask(String name, String module, Map<String, Object> args) {
+        this.name = name
+        this.module = module
+        this.args = args
+    }
+
+    AnsibleTask(String name, String module, Closure cl) {
+        this.name = name
+        this.module = module
+        this.apply(cl)
+    }
 
     def propertyMissing(String name) {
         args[name]
