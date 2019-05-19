@@ -38,4 +38,18 @@ class DslTasksBlockTest {
         }
         assert tasks[0].handlers == ["example handler"]
     }
+
+    @Test void unnamedTasksWork() {
+        List<AnsibleTask> tasks = []
+        new DslTasksBlock(tasks).apply {
+            foo_module {
+                bar = 1
+            }
+        }
+        assert tasks.size() == 1
+        def task = tasks[0]
+        assert task.module == "foo_module"
+        assert task.taskName == null
+        assert task.args.bar == 1
+    }
 }
