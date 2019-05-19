@@ -1,7 +1,15 @@
 package com.pushittoprod.groovible
 
-class AnsiblePlaybook {
-    List<AnsiblePlay> plays
+class AnsibleDsl {
+    static AnsiblePlaybook playbook(Closure cl) {
+        def playbook = new AnsiblePlaybook()
+        playbook.apply(cl)
+        return playbook
+    }
+}
+
+class AnsiblePlaybook implements Applicable {
+    List<AnsiblePlay> plays = []
 
     def play(Closure f) {
 
@@ -102,9 +110,5 @@ class AnsibleTask {
     String name
     String module
     Map<String, Object> args
-}
-
-def playbook(Closure f) {
-
 }
 

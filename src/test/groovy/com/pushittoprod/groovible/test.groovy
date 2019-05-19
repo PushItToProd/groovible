@@ -1,5 +1,9 @@
 package com.pushittoprod.groovible
+
+import org.junit.Ignore
 import org.junit.Test
+
+import static com.pushittoprod.groovible.AnsibleDsl.*
 
 // functional test for overall dsl behavior
 class DslTest {
