@@ -29,19 +29,6 @@ class DslTasksBlockTest {
         assert tasks[0].module == "foo_module"
     }
 
-    @Test void tasksGetCreatedByAddTask() {
-        List<AnsibleTask> tasks = []
-        new DslTasksBlock(tasks).addTask("debug", [msg: "hello"])
-        assert tasks[0].module == "debug"
-        assert tasks[0].args == [msg: "hello"]
-    }
-
-    @Test void namedTasksGetCreatedByAddTask() {
-        List<AnsibleTask> tasks = []
-        new DslTasksBlock(tasks).addTask( "print debug", "debug", [msg: "hello"])
-        assert tasks[0].name == "print debug"
-    }
-
     @Test void notifyWorks() {
         List<AnsibleTask> tasks = []
         new DslTasksBlock(tasks).apply {

@@ -47,25 +47,6 @@ class DslTasksBlock implements Applicable {
         this.tasks = tasks
     }
 
-    def addTask(String taskName, String moduleName, Map args) {
-        AnsibleTask task = new AnsibleTask(name: taskName, module: moduleName, args: args)
-        tasks.add(task)
-    }
-
-    def addTask(String moduleName, Map args) {
-        addTask(null, moduleName, args)
-    }
-
-    def addTask(String moduleName, Closure cl) {
-        addTask(null, moduleName, cl)
-    }
-
-    def addTask(String taskName, String moduleName, Closure cl) {
-        Map args = [:]
-        Metaprogramming.apply(args, cl)
-        addTask(taskName, moduleName, args)
-    }
-
     // methodMissing dynamically dispatches undefined methods to Ansible task declarations
     def methodMissing(String name, args) {
         // TODO: validate Ansible module names and args
