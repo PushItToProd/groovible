@@ -26,16 +26,23 @@ class AnsiblePlay implements Applicable {
     List<AnsibleTask> handlers = []
 
     def vars(Closure f) {
+        // TODO: refactor to use apply()
         def code = f.rehydrate(vars, this, this)
         code.resolveStrategy = Closure.DELEGATE_FIRST
         code()
     }
 
     def tasks(Closure f) {
+        // TODO: refactor to use apply()
         DslTasksBlock tasksBlock = new DslTasksBlock(tasks)
         def code = f.rehydrate(tasksBlock, this, this)
         code.resolveStrategy = Closure.DELEGATE_FIRST
         code()
+    }
+
+    void handlers(Closure f) {
+        DslTasksBlock tasksBlock = new DslTasksBlock(handlers)
+        tasksBlock.apply(f)
     }
 }
 
@@ -62,7 +69,7 @@ class DslTasksBlock implements Applicable {
                 argsObject = args[1]
                 break
             case Closure:
-                case Map:
+            case Map:
                 argsObject = args[0]
                 break
             default:
@@ -83,21 +90,21 @@ class DslTasksBlock implements Applicable {
 }
 
 class AnsibleTask implements Applicable {
-    String name = null
+    String taskName = null
     String module
     Map<String, Object> args = [:]
     List<String> handlers = []
 
     AnsibleTask() {}
 
-    AnsibleTask(String name, String module, Map<String, Object> args) {
-        this.name = name
+    AnsibleTask(String taskName, String module, Map<String, Object> args) {
+        this.taskName = taskName
         this.module = module
         this.args = args
     }
 
-    AnsibleTask(String name, String module, Closure cl) {
-        this.name = name
+    AnsibleTask(String taskName, String module, Closure cl) {
+        this.taskName = taskName
         this.module = module
         this.apply(cl)
     }

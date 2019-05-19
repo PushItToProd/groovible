@@ -1,6 +1,6 @@
 package com.pushittoprod.groovible
 
-import org.junit.Ignore
+
 import org.junit.Test
 
 class DslTasksBlockTest {
@@ -15,7 +15,7 @@ class DslTasksBlockTest {
         assert tasks.size() == 1
         def task = tasks[0]
         assert task.module == "foo_module"
-        assert task.name == "task name"
+        assert task.taskName == "task name"
         assert task.args.bar == 1
         assert task.args.baz == "hello"
     }

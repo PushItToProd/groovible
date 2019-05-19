@@ -23,6 +23,13 @@ class DslIntegrationTest {
                         notify "example handler"
                     }
                 }
+
+                handlers {
+                    service("example handler") {
+                        name = "httpd"
+                        state = "restarted"
+                    }
+                }
             }
         }
     }
@@ -47,5 +54,11 @@ class DslIntegrationTest {
     @Test void setsNotify() {
         AnsiblePlaybook playbook = createPlaybook()
         assert playbook.plays[0].tasks[0].handlers == ["example handler"]
+    }
+
+    @Test void createsHandler() {
+        AnsiblePlaybook playbook = createPlaybook()
+        assert playbook.plays[0].handlers.size() == 1
+        assert playbook.plays[0].handlers[0].taskName == "example handler"
     }
 }
