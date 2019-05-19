@@ -21,15 +21,16 @@ class DslFunctionalTestNotify {
 
     def expected_output = '''
     ---
-    - template:
-        src: /srv/httpd.j2
-        dest: /etc/httpd.conf
-      notify:
-      - restart apache
+    - tasks:
+      - template:
+          src: /srv/httpd.j2
+          dest: /etc/httpd.conf
+        notify:
+        - restart apache
     '''.stripIndent().trim()
 
     @Test void testExample() {
-        def output = input.compile()
+        def output = input.compile().stripIndent().trim()
         assert expected_output == output
     }
 }
