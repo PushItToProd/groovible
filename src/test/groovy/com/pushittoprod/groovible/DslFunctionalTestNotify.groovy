@@ -1,5 +1,7 @@
 package com.pushittoprod.groovible
 
+import com.pushittoprod.groovible.serialization.Serialization
+
 import static com.pushittoprod.groovible.dsl.AnsiblePlaybookBuilder.playbook
 
 import org.junit.Test
@@ -30,7 +32,7 @@ class DslFunctionalTestNotify {
     '''.stripIndent().trim()
 
     @Test void testExample() {
-        def output = input.compile().stripIndent().trim()
+        def output = Serialization.serializeYaml(input).stripIndent().trim()
         assert expected_output == output
     }
 }
@@ -57,7 +59,7 @@ class DslFunctionalTestNotifyEmpty {
     '''.stripIndent().trim()
 
     @Test void testExample() {
-        def output = input.compile().stripIndent().trim()
+        def output = Serialization.serializeYaml(input).stripIndent().trim()
         assert expected_output == output
     }
 }
