@@ -84,6 +84,59 @@ Get this YAML:
           name: httpd
           state: restarted
 
+## Features
+
+The example basically covers it. Playbook scripts can contain the following blocks:
+
+* `playbook`: The outermost block, required to create a playbook.
+* `play`: Defines an Ansible play, must be inside a `playbook` block.
+    * Supported variables (these map directly to the equivalent Ansible options)
+        * `hosts`
+        * `remote_user`
+    * Supported blocks
+        * `vars`
+        * `tasks`
+        * `handlers`
+* `vars`: Any variables defined in this block will be set on the `vars` section in your final playbook.
+* `tasks`: A special block for declaring tasks. See the **Task blocks** section below for more details.
+* `handlers`: A `tasks` block by another name, with the same functionality described below.
+
+### Task blocks
+
+Task blocks (i.e. `tasks` and `handlers`) have special semantics. Inside these blocks, any method call matching the
+signatures `(Closure cl)` or `(String name, Closure cl)` is dynamically rewritten into an Ansible module invocation.
+This means that Groovible currently supports every possible Ansible module, including `aci_aaa_user`,
+`azure_rm_cosmosdbaccount`, and even `frizzbungle`, a module that doesn't exist. This also means that there are no
+compile-time checks to validate modules or their parameters. It is expected that invalid invocations will be caught
+by Ansible.
+
+Modules can be invoked like so:
+
+```groovy
+// A named task
+yum("ensure apache is at the latest version") {
+    name = "httpd"
+    state = "latest"
+}
+
+// An unnamed task
+yum {
+    name = "httpd"
+    state = "latest"
+}
+```
+
+Handlers can be notified with the `notify` method:
+
+```groovy
+template("write the apache config file") {
+    src = "/srv/httpd.j2"
+    dest = "/etc/httpd.conf"
+
+    notify "restart apache"
+}
+```
+
 ## Technologies used
 
 * [Groovy](http://groovy-lang.org/): DSL definition
