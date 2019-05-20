@@ -1,6 +1,6 @@
 package com.pushittoprod.groovible
 
-import static com.pushittoprod.groovible.AnsibleDsl.*
+import static com.pushittoprod.groovible.dsl.AnsiblePlaybookBuilder.playbook
 
 import org.junit.Test
 

@@ -2,7 +2,7 @@ package com.pushittoprod.groovible
 
 import org.junit.Test
 
-import static com.pushittoprod.groovible.AnsibleDsl.*
+import static com.pushittoprod.groovible.dsl.AnsiblePlaybookBuilder.playbook
 
 // functional test for overall dsl behavior
 class DslFunctionalTestEndToEnd {

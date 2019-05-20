@@ -1,9 +1,13 @@
 package com.pushittoprod.groovible
 
+import com.pushittoprod.groovible.ansible.AnsiblePlay
+import com.pushittoprod.groovible.dsl.AnsiblePlayBuilder
+
 class AnsiblePlayTest extends GroovyTestCase {
     void testApply() {
-        AnsiblePlay ansiblePlay = new AnsiblePlay()
-        ansiblePlay.apply {
+        def ansiblePlay = new AnsiblePlay()
+        def builder = new AnsiblePlayBuilder(ansiblePlay)
+        builder.build {
             hosts = "hosts"
             vars {
                 foo = 1
@@ -14,13 +18,14 @@ class AnsiblePlayTest extends GroovyTestCase {
     }
 
     void testHandlersGetCreated() {
-        AnsiblePlay ansiblePlay = new AnsiblePlay()
-        ansiblePlay.apply {
+        def ansiblePlay = new AnsiblePlay()
+        def builder = new AnsiblePlayBuilder(ansiblePlay)
+        builder.build {
             handlers {
                 service("example handler") {}
             }
         }
-        assertEquals("example handler", ansiblePlay.handlers[0].taskName)
+        assertEquals("example handler", ansiblePlay.handlers[0].name)
         assertEquals(1, ansiblePlay.handlers.size())
     }
 }

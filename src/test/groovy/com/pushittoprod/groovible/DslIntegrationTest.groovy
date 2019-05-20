@@ -1,7 +1,8 @@
 package com.pushittoprod.groovible
 import org.junit.Test
 
-import static com.pushittoprod.groovible.AnsibleDsl.*
+import com.pushittoprod.groovible.ansible.AnsiblePlaybook
+import static com.pushittoprod.groovible.dsl.AnsiblePlaybookBuilder.playbook
 
 
 class DslIntegrationTest {
@@ -43,22 +44,22 @@ class DslIntegrationTest {
 
     @Test void playbookCreatesAPlay() {
         AnsiblePlaybook playbook = createPlaybook()
-        assert playbook.plays.size() == 1
+        assert playbook.size() == 1
     }
 
     @Test void createsTask() {
         AnsiblePlaybook playbook = createPlaybook()
-        assert playbook.plays[0].tasks.size() == 1
+        assert playbook[0].tasks.size() == 1
     }
 
     @Test void setsNotify() {
         AnsiblePlaybook playbook = createPlaybook()
-        assert playbook.plays[0].tasks[0].handlers == ["example handler"]
+        assert playbook[0].tasks[0].handlers == ["example handler"]
     }
 
     @Test void createsHandler() {
         AnsiblePlaybook playbook = createPlaybook()
-        assert playbook.plays[0].handlers.size() == 1
-        assert playbook.plays[0].handlers[0].taskName == "example handler"
+        assert playbook[0].handlers.size() == 1
+        assert playbook[0].handlers[0].name == "example handler"
     }
 }

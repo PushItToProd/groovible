@@ -25,4 +25,12 @@ class AnsiblePlaybookBuilder {
     void play(@DelegatesTo(value = AnsiblePlayBuilder, strategy = Closure.DELEGATE_ONLY) Closure cl) {
         play(null, cl)
     }
+
+    static AnsiblePlaybook playbook(
+            @DelegatesTo(value = AnsiblePlaybookBuilder, strategy = Closure.DELEGATE_ONLY) Closure cl) {
+        def playbook = new AnsiblePlaybook()
+        def builder = new AnsiblePlaybookBuilder(playbook)
+        builder.build(cl)
+        return playbook
+    }
 }
