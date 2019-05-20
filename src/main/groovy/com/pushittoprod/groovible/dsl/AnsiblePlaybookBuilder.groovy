@@ -15,14 +15,14 @@ class AnsiblePlaybookBuilder {
     }
 
     void play(String playName,
-              @DelegatesTo(value = AnsiblePlaybookBuilder, strategy = Closure.DELEGATE_ONLY) Closure cl) {
+              @DelegatesTo(value = AnsiblePlayBuilder, strategy = Closure.DELEGATE_ONLY) Closure cl) {
         def play = new AnsiblePlay(name: playName)
         def builder = new AnsiblePlayBuilder(play)
         builder.build(cl)
         ansiblePlaybook.add(play)
     }
 
-    void play(@DelegatesTo(value = AnsiblePlaybookBuilder, strategy = Closure.DELEGATE_ONLY) Closure cl) {
+    void play(@DelegatesTo(value = AnsiblePlayBuilder, strategy = Closure.DELEGATE_ONLY) Closure cl) {
         play(null, cl)
     }
 }
