@@ -1,4 +1,4 @@
-package com.pushittoprod.groovible
+package com.pushittoprod.groovible.serialization
 
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString

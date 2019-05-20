@@ -1,9 +1,10 @@
-package com.pushittoprod.groovible
+package com.pushittoprod.groovible.serialization
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator
+import com.pushittoprod.groovible.ansible.AnsibleTask
 
 class Serialization {
     static ObjectMapper mapper = getMapper()
