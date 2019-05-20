@@ -31,3 +31,7 @@ task fullJar(type: Jar) {
     }
     with jar
 }
+
+task acceptanceTest(type: Exec, dependsOn: 'fullJar') {
+    commandLine 'sh', '-c', 'bats acceptance-tests'
+}
