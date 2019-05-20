@@ -10,6 +10,10 @@ I'm tired of writing YAML and I wanted to see if a simple DSL could do the job a
 
 ## Example
 
+This example is taken from the 
+[Ansible Docs](https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html#playbook-language-example) and is
+the code used to validate the compiler in the acceptance test.
+
 Write this DSL:
 
 ```groovy
@@ -51,7 +55,7 @@ playbook {
 }
 ```
 
-Get this YAML (taken from the [Ansible Docs](https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html#playbook-language-example)):
+Get this YAML:
 
     ---
     - hosts: webservers
@@ -82,9 +86,10 @@ Get this YAML (taken from the [Ansible Docs](https://docs.ansible.com/ansible/la
 
 ## Technologies used
 
-* [Groovy](http://groovy-lang.org/): DSL definition.
+* [Groovy](http://groovy-lang.org/): DSL definition
 * [Jackson](https://github.com/FasterXML/jackson): Serialization
 * [BATS](https://github.com/bats-core/bats-core): Acceptance testing
+* [Gradle](https://gradle.org/): Build
 
 ## Test
 
@@ -108,3 +113,21 @@ $ java -jar build/libs/groovible-1.0-SNAPSHOT.jar acceptance-tests/example1_in.g
 
 Provided under the GNU Affero General Public License, Version 3.
 
+## References
+
+* Groovy
+    * [Runtime and compile-time metaprogramming](http://groovy-lang.org/metaprogramming.html): 
+      Covers propertyMissing, methodMissing, used to implement dynamic task blocks.
+    * [Domain-Specific Languages](http://docs.groovy-lang.org/docs/latest/html/documentation/core-domain-specific-languages.html):
+      General overview of Groovy DSL implementation.
+    * [Integrating Groovy in a Java application](http://docs.groovy-lang.org/latest/html/documentation/guide-integrating.html):
+      Describes how to compile Groovy code on demand, used to implement the compiler.
+    * [Compile-time metaprogramming](http://docs.groovy-lang.org/latest/html/documentation/index.html#_compile_time_metaprogramming):
+      Not yet used. Covers AST transformations.
+* Ansible
+    * [Intro to Playbooks](https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html):
+      Contains the example used for acceptance testing.
+* Gradle
+    * [Create a Groovy executable JAR with Gradle](https://stackoverflow.com/a/9749869) (StackOverflow)
+* README
+    * [A Beginners Guide to writing a Kickass README](https://medium.com/@meakaakka/a-beginners-guide-to-writing-a-kickass-readme-7ac01da88ab3) (Akash Nimare, Medium)
