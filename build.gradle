@@ -1,7 +1,10 @@
 plugins {
     id 'groovy'
     id 'java'
+    id 'application'
 }
+
+mainClassName = 'com.pushittoprod.groovible.cli.CliMain'
 
 group 'com.pushittoprod'
 version '1.0-SNAPSHOT'
@@ -18,4 +21,13 @@ dependencies {
 
     compile 'com.fasterxml.jackson.core:jackson-databind:2.9.2'
     compile 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.9.2'
+}
+
+task fullJar(type: Jar) {
+    from files(sourceSets.main.output.classesDir)
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }}
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+    with jar
 }
