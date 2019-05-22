@@ -22,6 +22,12 @@ class FreeFormModuleFunctionalTest {
             win_shell {
                 win_shell = /C:\\somescript.ps1 >> C:\\somelog.txt/
             }
+            win_command {
+                win_command = "whoami"
+            }
+            meta {
+                meta = "flush_handlers"
+            }
         }
     }
     '''
@@ -34,6 +40,8 @@ class FreeFormModuleFunctionalTest {
       - raw: cat < /tmp/*.txt
       - script: /some/local/script.sh --some-argument 1234
       - win_shell: C:\\somescript.ps1 >> C:\\somelog.txt
+      - win_command: whoami
+      - meta: flush_handlers
     '''.stripIndent().trim()
 
     @Test void shellCommandCompilesCorrectly() {
