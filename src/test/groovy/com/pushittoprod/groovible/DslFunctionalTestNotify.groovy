@@ -33,7 +33,9 @@ class DslFunctionalTestNotify {
 
     @Test void testExample() {
         def output = Serialization.serializeYaml(input).stripIndent().trim()
-        assert expected_output == output
+        def outputMap = Serialization.deserializeYaml(output, ArrayList.class)
+        def expectedOutputMap = Serialization.deserializeYaml(expected_output, ArrayList.class)
+        assert expectedOutputMap == outputMap
     }
 }
 
@@ -60,6 +62,8 @@ class DslFunctionalTestNotifyEmpty {
 
     @Test void testExample() {
         def output = Serialization.serializeYaml(input).stripIndent().trim()
-        assert expected_output == output
+        def outputMap = Serialization.deserializeYaml(output, ArrayList.class)
+        def expectedOutputMap = Serialization.deserializeYaml(expected_output, ArrayList.class)
+        assert expectedOutputMap == outputMap
     }
 }
