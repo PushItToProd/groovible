@@ -1,0 +1,11 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: gradle:5.4-jdk8
+    steps:
+      - checkout
+      - run: gradle test
+      - run: gradle acceptanceTest
+      - store_test_results:
+          path: build/test-results
