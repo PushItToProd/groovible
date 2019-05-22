@@ -1,5 +1,6 @@
 package com.pushittoprod.groovible.compiler
 
+import com.pushittoprod.groovible.serialization.Serialization
 import org.junit.Test
 
 class DslCompilerTest {
@@ -79,7 +80,9 @@ class DslCompilerTest {
 
     @Test void compilationWorks() {
         def compiler = new DslCompiler()
-        String yaml = compiler.compile(inputScript)
-        assert expected_output == yaml.stripIndent().trim()
+        String yaml = compiler.compile(inputScript).stripIndent().trim()
+        def outputMap = Serialization.deserializeYaml(yaml, ArrayList.class)
+        def expectedOutputMap = Serialization.deserializeYaml(expected_output, ArrayList.class)
+        assert expectedOutputMap == outputMap
     }
 }

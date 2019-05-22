@@ -10,11 +10,11 @@
       name: httpd
       state: latest
   - name: write the apache config file
+    notify:
+    - restart apache
     template:
       src: /srv/httpd.j2
       dest: /etc/httpd.conf
-    notify:
-    - restart apache
   - name: ensure apache is running
     service:
       name: httpd
