@@ -1,5 +1,6 @@
 package com.pushittoprod.groovible.dsl
 
+import com.pushittoprod.groovible.ansible.AnsibleFreeFormTask
 import com.pushittoprod.groovible.ansible.AnsibleTask
 
 class DslTasksBlock {
@@ -37,5 +38,19 @@ class DslTasksBlock {
         builder.build(closure)
 
         tasks.add(task)
+    }
+
+    void shell(String name, Closure cl) {
+        def task = new AnsibleFreeFormTask(name: name, module: 'shell')
+        def builder = new AnsibleTaskBuilder(task)
+        builder.build(cl)
+        // TODO: this is really gross
+        task.freeformParameter = task.args.shell
+        task.args.remove('shell')
+        tasks.add(task)
+    }
+
+    void shell(Closure cl) {
+        shell(null, cl)
     }
 }
