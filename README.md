@@ -141,13 +141,12 @@ template("write the apache config file") {
 
 * [Groovy](http://groovy-lang.org/): DSL definition
 * [Jackson](https://github.com/FasterXML/jackson): Serialization
-* [BATS](https://github.com/bats-core/bats-core): Acceptance testing
 * [Gradle](https://gradle.org/): Build
 
 ## Test
 
 You can run unit, integration, and functional tests with `./gradlew test`. The acceptance test can be run with 
-`./gradlew acceptanceTest`. The acceptance test requires you to have BATS installed.
+`./gradlew acceptanceTest`.
 
 ## Build and Run
 
