@@ -1,13 +1,11 @@
 #!/usr/bin/env bash
 
-readonly JAR_PATH="build/libs/groovible-1.0-SNAPSHOT.jar"
-readonly TEST_PATH="acceptance-tests"
+. acceptance-tests/common.bash
 
-java -jar "$JAR_PATH" "$TEST_PATH/example1_in.groovy" \
-  | diff - "$TEST_PATH/example1_expected.yml"
-if [ $? -ne 0 ]; then
-  echo "test failed: compiled output does not match expected output" >&2
-  exit 1
-fi
+test test_example1 "Example 1 compiles correctly"
+test_example1() {
+  java -jar "$JAR_PATH" "$TEST_PATH/example1_in.groovy" 2>/dev/null \
+    | diff - "$TEST_PATH/example1_expected.yml"
+}
 
-echo "all tests passed!"
+run_tests
